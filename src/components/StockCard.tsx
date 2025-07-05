@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { TrendingUp, TrendingDown, DollarSign, Activity } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import {
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+  Activity,
+  Volume2,
+} from "lucide-react";
 import { fetchStockQuote } from "../api/fetchStockQuote";
 
 interface StockCardProps {
@@ -8,6 +15,7 @@ interface StockCardProps {
 }
 
 const StockCard: React.FC<StockCardProps> = ({ ticker, darkMode }) => {
+  const { t } = useTranslation();
   const [price, setPrice] = useState<number>(0);
   const [change, setChange] = useState<number>(0);
   const [changePercent, setChangePercent] = useState<number>(0);
@@ -15,26 +23,26 @@ const StockCard: React.FC<StockCardProps> = ({ ticker, darkMode }) => {
   const [marketCap, setMarketCap] = useState<string>("—");
 
   useEffect(() => {
-    console.log("Fetching data for", ticker);
     const loadStockData = async () => {
       const data = await fetchStockQuote(ticker);
-      console.log("Fetched data:", data);
       setPrice(data.c);
       setChange(data.d);
       setChangePercent(data.dp);
       setVolume(data.v);
-      setMarketCap("—"); // placeholder
+      setMarketCap(
+        data.marketCapitalization
+          ? (Number(data.marketCapitalization) / 1e9).toFixed(2) + "B"
+          : "—"
+      );
     };
 
-    loadStockData(); // initial fetch
-    const intervalId = setInterval(loadStockData, 1000); // fetch every 1 sec
-
-    return () => clearInterval(intervalId); // cleanup on unmount
+    loadStockData();
+    const intervalId = setInterval(loadStockData, 5000);
+    return () => clearInterval(intervalId);
   }, [ticker]);
 
   const isPositive = change >= 0;
 
-  // Format price in Indian Rupees
   const formatINRPrice = (price: number) => {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -44,7 +52,6 @@ const StockCard: React.FC<StockCardProps> = ({ ticker, darkMode }) => {
     }).format(price);
   };
 
-  // Format change in Indian Rupees
   const formatINRChange = (change: number) => {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -55,12 +62,29 @@ const StockCard: React.FC<StockCardProps> = ({ ticker, darkMode }) => {
     }).format(change);
   };
 
+  const speakSummary = () => {
+    const summary = `${ticker} is currently trading at ${formatINRPrice(
+      price
+    )}. The change is ${formatINRChange(change)} (${changePercent.toFixed(
+      2
+    )} percent).`;
+
+    const utterance = new SpeechSynthesisUtterance(summary);
+    utterance.lang = "en-IN";
+    utterance.rate = 0.95;
+    speechSynthesis.speak(utterance);
+  };
+
   return (
     <div
       className={`backdrop-blur-xl rounded-2xl p-6 border transition-all duration-300 hover:scale-105 ${
-        darkMode
-          ? "bg-gray-900/40 border-gray-800/50"
-          : "bg-white/40 border-gray-200/50"
+        isPositive
+          ? darkMode
+            ? "bg-green-700/30 border-green-500/30"
+            : "bg-green-100/30 border-green-400/50"
+          : darkMode
+          ? "bg-red-700/30 border-red-500/30"
+          : "bg-red-100/30 border-red-400/50"
       }`}
     >
       <div className="flex items-center justify-between mb-4">
@@ -73,22 +97,36 @@ const StockCard: React.FC<StockCardProps> = ({ ticker, darkMode }) => {
             <DollarSign className="w-6 h-6 text-blue-500" />
           </div>
           <div>
-            <h3
-              className={`text-xl font-bold ${
-                darkMode ? "text-white" : "text-gray-900"
-              }`}
-            >
-              {ticker}
-            </h3>
+            <div className="flex items-center space-x-2">
+              <h3
+                className={`text-xl font-bold ${
+                  darkMode ? "text-white" : "text-gray-900"
+                }`}
+              >
+                {ticker}
+              </h3>
+              <button
+                onClick={speakSummary}
+                title="Read Summary"
+                className="p-1 rounded hover:scale-110 transition-all"
+              >
+                <Volume2
+                  className={`w-4 h-4 ${
+                    darkMode ? "text-gray-300" : "text-gray-600"
+                  }`}
+                />
+              </button>
+            </div>
             <p
               className={`text-sm ${
                 darkMode ? "text-gray-400" : "text-gray-600"
               }`}
             >
-              Live Price (INR)
+              {t("live_price")}
             </p>
           </div>
         </div>
+
         <div
           className={`flex items-center space-x-1 px-3 py-1.5 rounded-lg ${
             isPositive
@@ -140,7 +178,7 @@ const StockCard: React.FC<StockCardProps> = ({ ticker, darkMode }) => {
                   darkMode ? "text-gray-300" : "text-gray-600"
                 }`}
               >
-                Volume
+                {t("volume")}
               </span>
             </div>
             <p
@@ -149,7 +187,11 @@ const StockCard: React.FC<StockCardProps> = ({ ticker, darkMode }) => {
               }`}
             >
               {typeof volume === "number"
-                ? volume.toLocaleString("en-IN")
+                ? volume >= 1e9
+                  ? (volume / 1e9).toFixed(2) + "B"
+                  : volume >= 1e6
+                  ? (volume / 1e6).toFixed(2) + "M"
+                  : volume.toLocaleString("en-IN")
                 : "—"}
             </p>
           </div>
@@ -166,7 +208,7 @@ const StockCard: React.FC<StockCardProps> = ({ ticker, darkMode }) => {
                   darkMode ? "text-gray-300" : "text-gray-600"
                 }`}
               >
-                Market Cap
+                {t("market_cap")}
               </span>
             </div>
             <p
@@ -174,7 +216,11 @@ const StockCard: React.FC<StockCardProps> = ({ ticker, darkMode }) => {
                 darkMode ? "text-white" : "text-gray-900"
               }`}
             >
-              {marketCap}
+              {typeof marketCap === "string"
+                ? marketCap
+                : Number(marketCap).toLocaleString("en-IN", {
+                    maximumFractionDigits: 2,
+                  })}
             </p>
           </div>
         </div>

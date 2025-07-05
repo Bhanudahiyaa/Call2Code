@@ -1,0 +1,54 @@
+{
+  "market_sentiment": "Sentimiento del mercado para {{ticker}}",
+  "news_social": "Noticias y análisis social",
+  "bullish": "Alcista",
+  "bearish": "Bajista",
+  "neutral": "Neutral",
+  "loading_news": "Cargando noticias...",
+  "sentiment_score": "Puntuación de sentimiento",
+  "articles_count": "Basado en {{count}} artículos recientes",
+
+  "app_name": "Pulso del Mercado",
+  "app_tagline": "Análisis profesional de acciones",
+  "features_title": "Funciones de la Plataforma",
+  "features_description": "Descubre lo que impulsa a Market Pulse.",
+  "feature_1_title": "Datos bursátiles en tiempo real",
+  "feature_1_desc": "Actualizaciones de precios instantáneas y métricas financieras clave para las principales acciones.",
+  "feature_2_title": "Visualización de Tendencias",
+  "feature_2_desc": "Gráficos interactivos para rastrear movimientos históricos y en vivo del mercado.",
+  "feature_3_title": "Análisis de Sentimiento",
+  "feature_3_desc": "Análisis en tiempo real de noticias y redes sociales con tecnología de PLN.",
+  "loading_message": "Cargando datos bursátiles...",
+  "live_price": "Precio en vivo (INR)",
+  "volume": "Volumen",
+  "market_cap": "Capitalización de mercado",
+  "finance_facts": [
+    "La Bolsa de Nueva York fue fundada en 1792.",
+    "Warren Buffett compró su primera acción a los 11 años.",
+    "El mercado alcista más largo duró de 2009 a 2020.",
+    "Tesla se convirtió en el fabricante de automóviles más valioso en 2020.",
+    "Los precios de las acciones se ven influenciados tanto por emociones como por cifras.",
+    "El término 'blue chip' proviene del póker.",
+    "El índice Dow Jones fue creado en 1896.",
+    "Los picos de volumen suelen indicar movimientos importantes de inversores.",
+    "El ratio P/E ayuda a valorar una empresa."
+  ],
+  "search_placeholder": "Ingresa el símbolo de la acción (ej. APPLE)",
+  "search_button": "Buscar",
+  "popular_stocks": "Acciones Populares",
+  "historical_chart": "Gráfico Histórico",
+  "chart_subtitle": "Movimiento de precios en el tiempo (INR)",
+  "no_chart_data": "No hay datos de gráficos disponibles.",
+  "last_updated": "Última actualización",
+  "price_label": "Precio (INR)",
+
+  "most_popular_stocks": "Acciones Más Populares",
+
+  "assistant": {
+    "greeting": "👋 ¡Hola! Soy Warren. Déjame ayudarte a explorar Market Pulse.",
+    "card_info": "📈 Esta tarjeta muestra el precio y movimiento actual de las acciones.",
+    "chart_info": "📊 Aquí puedes ver gráficos históricos de cualquier acción.",
+    "sentiment_info": "🧠 Este panel analiza el sentimiento del mercado a partir de las noticias.",
+    "search_info": "💡 Usa la barra de búsqueda para encontrar tus acciones favoritas."
+  }
+}

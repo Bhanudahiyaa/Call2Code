@@ -1,5 +1,6 @@
 import React from "react";
 import { TrendingUp, Moon, Sun } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface HeaderProps {
   darkMode: boolean;
@@ -7,6 +8,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode }) => {
+  const { t, i18n } = useTranslation();
+
   return (
     <header
       className={`sticky top-0 z-50 backdrop-blur-xl border-b transition-all duration-300 ${
@@ -31,32 +34,48 @@ const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode }) => {
                   darkMode ? "text-white" : "text-gray-900"
                 }`}
               >
-                Market Pulse
+                {t("app_name")}
               </h1>
               <p
                 className={`text-sm transition-colors ${
                   darkMode ? "text-gray-400" : "text-gray-600"
                 }`}
               >
-                Professional Stock Analysis
+                {t("app_tagline")}
               </p>
             </div>
           </div>
 
-          <button
-            onClick={toggleDarkMode}
-            className={`p-3 rounded-full transition-all duration-300 hover:scale-110 ${
-              darkMode
-                ? "bg-gray-800/50 hover:bg-gray-700/50 text-yellow-400"
-                : "bg-gray-100/50 hover:bg-gray-200/50 text-gray-700"
-            }`}
-          >
-            {darkMode ? (
-              <Sun className="w-5 h-5" />
-            ) : (
-              <Moon className="w-5 h-5" />
-            )}
-          </button>
+          <div className="flex items-center space-x-4">
+            <select
+              onChange={e => i18n.changeLanguage(e.target.value)}
+              value={i18n.language}
+              className={`text-sm rounded px-2 py-1 border transition-all duration-300 ${
+                darkMode
+                  ? "bg-gray-800/50 text-white border-gray-700"
+                  : "bg-white text-gray-800 border-gray-300"
+              }`}
+            >
+              <option value="en">English</option>
+              <option value="hi">हिन्दी</option>
+              <option value="es">Español</option>
+            </select>
+
+            <button
+              onClick={toggleDarkMode}
+              className={`p-3 rounded-full transition-all duration-300 hover:scale-110 ${
+                darkMode
+                  ? "bg-gray-800/50 hover:bg-gray-700/50 text-yellow-400"
+                  : "bg-gray-100/50 hover:bg-gray-200/50 text-gray-700"
+              }`}
+            >
+              {darkMode ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </header>

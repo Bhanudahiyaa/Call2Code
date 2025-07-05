@@ -1,0 +1,56 @@
+{
+  "market_sentiment": "Market Sentiment for {{ticker}}",
+  "news_social": "News & Social Analysis",
+  "bullish": "Bullish",
+  "bearish": "Bearish",
+  "neutral": "Neutral",
+  "loading_news": "Loading news...",
+  "sentiment_score": "Sentiment Score",
+  "articles_count": "Based on {{count}} recent articles",
+  "app_name": "Market Pulse",
+  "app_tagline": "Professional Stock Analysis",
+
+  "features_title": "Platform Features",
+  "features_description": "Explore what powers Market Pulse.",
+  "feature_1_title": "Real-Time Stock Data",
+  "feature_1_desc": "Instant price updates and key financial metrics for top stocks.",
+  "feature_2_title": "Trend Visualization",
+  "feature_2_desc": "Interactive charts to track both historical and live market movements.",
+  "feature_3_title": "Sentiment Analysis",
+  "feature_3_desc": "Real-time news and social sentiment insights powered by NLP.",
+
+  "loading_message": "Loading stock data...",
+  "live_price": "Live Price (INR)",
+  "volume": "Volume",
+  "market_cap": "Market Cap",
+  "finance_facts": [
+    "The New York Stock Exchange was founded in 1792.",
+    "Warren Buffett bought his first stock at age 11.",
+    "The longest bull market lasted from 2009 to 2020.",
+    "Tesla became the most valuable carmaker in 2020.",
+    "Stock prices are influenced by emotions as much as numbers.",
+    "The term 'blue chip' comes from poker.",
+    "The Dow Jones was created in 1896.",
+    "Volume spikes often signal big investor moves.",
+    "P/E ratio helps measure a company’s valuation."
+  ],
+
+  "search_placeholder": "Enter stock ticker (e.g., APPLE)",
+  "search_button": "Search",
+  "popular_stocks": "Popular Stocks",
+
+  "historical_chart": "Historical Chart",
+  "chart_subtitle": "Price Movement Over Time (INR)",
+  "no_chart_data": "No chart data available.",
+  "last_updated": "Last updated",
+  "price_label": "Price (INR)",
+
+  "most_popular_stocks": "Most Popular Stocks",
+  "assistant": {
+    "greeting": "👋 Hi, I’m Warren! Let me help you explore Market Pulse.",
+    "card_info": "📈 This card shows the latest stock price and movement.",
+    "chart_info": "📊 Here you can view historical price charts for any ticker.",
+    "sentiment_info": "🧠 This panel analyzes market sentiment from news sources.",
+    "search_info": "💡 Use the search bar to look up your favorite stocks!"
+  }
+}

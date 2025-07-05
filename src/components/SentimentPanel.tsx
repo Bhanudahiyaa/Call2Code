@@ -6,6 +6,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { fetchStockNews, analyzeSentiment } from "../api/fetchStockNews";
+import { useTranslation } from "react-i18next";
 
 interface SentimentPanelProps {
   ticker: string;
@@ -26,6 +27,7 @@ const SentimentPanel: React.FC<SentimentPanelProps> = ({
   ticker,
   darkMode,
 }) => {
+  const { t } = useTranslation();
   const [newsData, setNewsData] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [fallback, setFallback] = useState<boolean>(false);
@@ -78,21 +80,21 @@ const SentimentPanel: React.FC<SentimentPanelProps> = ({
   const getSentimentData = (sentiment: number) => {
     if (sentiment > 2) {
       return {
-        label: "Bullish",
+        label: t("bullish"),
         color: "text-green-500",
         bgColor: "bg-green-500/20",
         icon: TrendingUp,
       };
     } else if (sentiment < -2) {
       return {
-        label: "Bearish",
+        label: t("bearish"),
         color: "text-red-500",
         bgColor: "bg-red-500/20",
         icon: TrendingDown,
       };
     } else {
       return {
-        label: "Neutral",
+        label: t("neutral"),
         color: "text-yellow-500",
         bgColor: "bg-yellow-500/20",
         icon: AlertCircle,
@@ -102,14 +104,23 @@ const SentimentPanel: React.FC<SentimentPanelProps> = ({
 
   const sentimentData = getSentimentData(overallSentiment);
   const SentimentIcon = sentimentData.icon;
-
+  const speak = (text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US"; // You can dynamically change based on i18n.language
+    utterance.pitch = 1;
+    utterance.rate = 1;
+    speechSynthesis.cancel(); // Stop any previous speech
+    speechSynthesis.speak(utterance);
+  };
   return (
     <div
       className={`backdrop-blur-xl rounded-2xl p-6 border transition-all duration-500 ${
-        darkMode
-          ? "bg-gray-900/40 border-gray-800/50"
-          : "bg-white/40 border-gray-200/50"
-      }`}
+        sentimentData.color.includes("green")
+          ? "bg-green-500/10 border-green-500/30"
+          : sentimentData.color.includes("red")
+          ? "bg-red-500/10 border-red-500/30"
+          : "bg-yellow-500/10 border-yellow-500/30"
+      } ${darkMode ? "text-white" : "text-gray-900"}`}
     >
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
@@ -126,7 +137,7 @@ const SentimentPanel: React.FC<SentimentPanelProps> = ({
                 darkMode ? "text-white" : "text-gray-900"
               }`}
             >
-              Market Sentiment for {ticker}
+              {t("market_sentiment", { ticker })}
             </h3>
             {fallback && (
               <p
@@ -142,7 +153,7 @@ const SentimentPanel: React.FC<SentimentPanelProps> = ({
                 darkMode ? "text-gray-400" : "text-gray-600"
               }`}
             >
-              News & Social Analysis
+              {t("news_social")}
             </p>
           </div>
         </div>
@@ -166,7 +177,7 @@ const SentimentPanel: React.FC<SentimentPanelProps> = ({
             darkMode ? "text-gray-400" : "text-gray-600"
           }`}
         >
-          Loading news...
+          {t("loading_news")}
         </div>
       ) : (
         <div className="space-y-4">
@@ -191,6 +202,17 @@ const SentimentPanel: React.FC<SentimentPanelProps> = ({
                 >
                   {news.headline}
                 </h4>
+                <button
+                  aria-label="Read news aloud"
+                  onClick={() => speak(news.headline)}
+                  className={`ml-2 p-1 rounded-full hover:scale-110 transition-transform ${
+                    darkMode
+                      ? "bg-gray-700/40 text-white"
+                      : "bg-gray-100 text-black"
+                  }`}
+                >
+                  🔊
+                </button>
                 <div
                   className={`flex items-center space-x-1 ml-4 px-2 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
                     news.sentiment === "positive"
@@ -245,14 +267,14 @@ const SentimentPanel: React.FC<SentimentPanelProps> = ({
                 darkMode ? "text-white" : "text-gray-900"
               }`}
             >
-              Sentiment Score
+              {t("sentiment_score")}
             </h4>
             <p
               className={`text-xs ${
                 darkMode ? "text-gray-400" : "text-gray-600"
               }`}
             >
-              Based on {newsData.length} recent articles
+              {t("articles_count", { count: newsData.length })}
             </p>
           </div>
           <div className="text-right">

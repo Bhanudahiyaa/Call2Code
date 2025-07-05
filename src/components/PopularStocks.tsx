@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface PopularStocksProps {
   onSelect: (ticker: string) => void;
@@ -11,6 +12,8 @@ const PopularStocks: React.FC<PopularStocksProps> = ({
   onSelect,
   darkMode,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div
       className={`backdrop-blur-xl rounded-2xl p-6 border transition-all duration-300 ${
@@ -24,7 +27,7 @@ const PopularStocks: React.FC<PopularStocksProps> = ({
           darkMode ? "text-white" : "text-gray-900"
         }`}
       >
-        Most Popular Stocks
+        {t("most_popular_stocks")}
       </h2>
       <div className="flex flex-wrap gap-3">
         {popularTickers.map(ticker => (

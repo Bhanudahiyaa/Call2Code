@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Search, TrendingUp } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface SearchBarProps {
   onSearch: (ticker: string) => void;
@@ -8,6 +9,7 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch, darkMode }) => {
   const [ticker, setTicker] = useState("");
+  const { t } = useTranslation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +39,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, darkMode }) => {
             type="text"
             value={ticker}
             onChange={e => setTicker(e.target.value)}
-            placeholder="Enter stock ticker (e.g., APPLE)"
+            placeholder={t(
+              "search_placeholder",
+              "Enter stock ticker (e.g., APPLE)"
+            )}
             className={`w-full pl-12 pr-4 py-4 rounded-xl border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
               darkMode
                 ? "bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-400"
@@ -48,7 +53,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, darkMode }) => {
             type="submit"
             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105"
           >
-            Search
+            {t("search_button", "Search")}
           </button>
         </div>
       </form>
@@ -59,7 +64,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, darkMode }) => {
             darkMode ? "text-gray-300" : "text-gray-600"
           }`}
         >
-          Popular Stocks
+          {t("popular_stocks", "Popular Stocks")}
         </p>
         <div className="flex flex-wrap gap-2">
           {popularStocks.map(stock => (

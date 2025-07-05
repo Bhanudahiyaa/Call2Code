@@ -8,20 +8,38 @@ import SearchBar from "./components/SearchBar";
 import FeatureSection from "./components/FeatureSection";
 import PopularStocks from "./components/PopularStocks";
 import { BarChart3 } from "lucide-react";
+import "./i18n";
+import VirtualAssistant from "./components/VirtualAssistant";
+import VoiceCommand from "./components/VoiceCommand";
 
 function App() {
-  const darkMode = true;
   const [selectedTicker, setSelectedTicker] = useState("AAPL");
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
 
   useEffect(() => {
     console.log("Selected Ticker:", selectedTicker);
   }, [selectedTicker]);
 
   return (
-    <div className="min-h-screen transition-all duration-300 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div
+      className={`min-h-screen transition-all duration-300 ${
+        darkMode
+          ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+          : "bg-gradient-to-br from-gray-100 via-white to-gray-100"
+      }`}
+    >
       <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />
 
-      <Header darkMode={darkMode} />
+      <Header
+        darkMode={darkMode}
+        toggleDarkMode={() => setDarkMode(prev => !prev)}
+      />
 
       <main className="container mx-auto px-4 py-8">
         <div className="space-y-8">
@@ -33,7 +51,6 @@ function App() {
             </div>
 
             <div className="lg:col-span-2">
-              {/* Pass selectedTicker explicitly to ChartSection */}
               <ChartSection ticker={selectedTicker} darkMode={darkMode} />
             </div>
           </div>
@@ -41,8 +58,10 @@ function App() {
           <div className="w-full">
             <SentimentPanel ticker={selectedTicker} darkMode={darkMode} />
           </div>
+
           <FeatureSection darkMode={darkMode} />
         </div>
+
         <div className="space-y-8">
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
@@ -61,6 +80,7 @@ function App() {
                 Top Performing Stocks
               </h3>
             </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {[
                 "AAPL",
@@ -135,7 +155,13 @@ function App() {
           </div>
         </div>
       </main>
+      <VoiceCommand
+        onSetTicker={setSelectedTicker}
+        onToggleDarkMode={() => setDarkMode(prev => !prev)}
+        language="en-US" // You can switch to "hi-IN" or "es-ES"
+      />
 
+      <VirtualAssistant darkMode={darkMode} />
       <Footer darkMode={darkMode} />
     </div>
   );
