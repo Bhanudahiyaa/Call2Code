@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BarChart3, TrendingUp, Calendar } from "lucide-react";
 import {
+  BarController,
   Chart as ChartJS,
   LineElement,
   CategoryScale,
@@ -17,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import "chartjs-adapter-date-fns"; // Required for time axis
 
 ChartJS.register(
+  BarController,
   LineElement,
   CategoryScale,
   LinearScale,
