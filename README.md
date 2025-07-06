@@ -27,8 +27,6 @@ Market Pulse is an intelligent and interactive stock market dashboard built with
 ---
 
 ## 📸 Screenshots
-<img width="1470" alt="Screenshot 2025-07-06 at 05 31 09" src="https://github.com/user-attachments/assets/477eb910-9f6d-43d6-a1ee-f0166aa2d328" />
-<img width="1470" alt="Screenshot 2025-07-06 at 05 31 17" src="https://github.com/user-attachments/assets/37abc9dc-8e28-481b-8eb2-a59a68435381" />
 <img width="1470" alt="Screenshot 2025-07-06 at 05 31 24" src="https://github.com/user-attachments/assets/b28c4b5a-345d-4056-9ac9-44f6c1b63bcb" />
 <img width="1470" alt="Screenshot 2025-07-06 at 05 31 31" src="https://github.com/user-attachments/assets/4536a2cf-c6d2-411f-a81f-6a68884ebfc0" />
 <img width="1470" alt="Screenshot 2025-07-06 at 05 31 37" src="https://github.com/user-attachments/assets/a096325c-e289-4aed-82aa-f05298fa558f" />
