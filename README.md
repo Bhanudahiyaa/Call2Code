@@ -1,7 +1,7 @@
 # 📈 Market Pulse Team Name - Core-4  LINK-https://call2-codecore4.vercel.app/
 - **Bhanu Pratap Singh
 - **Aaditya Malik
-- **Hardik Goel
+- **Hardiek Goel
 - **Arjun Rawat
 
 Market Pulse is an intelligent and interactive stock market dashboard built with React and TypeScript. It helps users visualize real-time data, analyze sentiments, explore charts, and even interact using voice commands or screen readers.
